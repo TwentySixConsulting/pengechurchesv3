@@ -2202,48 +2202,135 @@
 
 <style>
   #gate {
-    position: fixed; inset: 0; background: var(--navy, #0c1829);
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 1100px 700px at 50% 38%, rgba(201,168,76,0.10) 0%, rgba(12,24,41,0) 70%),
+      linear-gradient(180deg, #0c1829 0%, #0a1322 100%);
     display: flex; align-items: center; justify-content: center;
-    z-index: 9999; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    padding: 24px;
+    z-index: 9999;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #0c1829;
+  }
+  #gate .gate-frame {
+    display: flex; flex-direction: column; align-items: center;
+    width: 100%; max-width: 420px;
+  }
+  #gate .gate-eyebrow {
+    font-size: 10.5px; color: #c9a84c; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  #gate .gate-eyebrow::before,
+  #gate .gate-eyebrow::after {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: rgba(201,168,76,0.45);
   }
   #gate .gate-card {
-    background: #f7f5f0; padding: 36px 32px; border-radius: 14px;
-    width: 100%; max-width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    position: relative;
+    background: #faf8f3;
+    padding: 40px 40px 32px;
+    border-radius: 16px;
+    width: 100%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.04);
   }
-  #gate h2 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin: 0 0 4px; color: #0c1829; font-weight: 700; letter-spacing: -0.02em; }
-  #gate .gate-sub { font-size: 12.5px; color: #6b7280; margin: 0 0 22px; }
-  #gate label { display: block; font-size: 11.5px; font-weight: 600; color: #0c1829; margin-bottom: 6px; letter-spacing: 0.03em; text-transform: uppercase; }
+  #gate .gate-card::before {
+    content: ''; position: absolute; top: 0; left: 28px; right: 28px; height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #c9a84c 50%, transparent 100%);
+    border-radius: 0 0 3px 3px;
+  }
+  #gate .gate-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px; line-height: 1.15; font-weight: 600;
+    color: #0c1829; letter-spacing: -0.025em;
+    margin: 0 0 6px;
+    font-variation-settings: 'opsz' 36, 'SOFT' 30, 'WONK' 0;
+  }
+  #gate .gate-title em {
+    font-style: italic; color: #a58430; font-weight: 500;
+  }
+  #gate .gate-sub {
+    font-size: 13px; color: #5a6478; line-height: 1.55;
+    margin: 0 0 24px;
+  }
+  #gate .gate-divider {
+    height: 1px; background: rgba(12,24,41,0.10);
+    margin: 0 0 22px;
+  }
+  #gate label {
+    display: block;
+    font-size: 10.5px; font-weight: 700; color: #2a3349;
+    margin-bottom: 7px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
   #gate input {
-    width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px;
-    border: 1px solid #d8d8d2; background: #fff; font-size: 14px; margin-bottom: 14px;
+    width: 100%; box-sizing: border-box;
+    padding: 12px 14px; border-radius: 10px;
+    border: 1px solid rgba(12,24,41,0.14);
+    background: #ffffff;
+    font-size: 14px; color: #0c1829;
+    margin-bottom: 16px;
     font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   }
-  #gate input:focus { outline: none; border-color: #c9a84c; }
+  #gate input::placeholder { color: #9aa3b3; }
+  #gate input:focus {
+    outline: none;
+    border-color: #c9a84c;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.18);
+    background: #fffdf8;
+  }
   #gate button {
-    width: 100%; padding: 11px; border-radius: 8px; border: none;
-    background: #0c1829; color: #f7f5f0; font-weight: 600; font-size: 14px;
-    cursor: pointer; font-family: inherit; letter-spacing: 0.02em;
+    width: 100%;
+    padding: 13px 16px; border-radius: 10px; border: none;
+    background: #0c1829; color: #faf8f3;
+    font-weight: 600; font-size: 14px;
+    cursor: pointer; font-family: inherit;
+    letter-spacing: 0.02em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    margin-top: 6px;
+    transition: background 0.15s ease, transform 0.04s ease;
   }
+  #gate button svg { width: 16px; height: 16px; }
   #gate button:hover { background: #152238; }
+  #gate button:active { transform: translateY(1px); }
   #gate button:disabled { opacity: 0.6; cursor: wait; }
-  #gate .gate-err { color: #c0392b; font-size: 12px; margin-top: 12px; min-height: 16px; }
-  #gate .gate-brand { font-size: 10px; color: #c9a84c; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px; }
+  #gate .gate-err {
+    color: #b8425a; font-size: 12.5px; font-weight: 500;
+    margin-top: 14px; min-height: 16px;
+  }
+  #gate .gate-foot {
+    margin-top: 20px;
+    font-size: 10.5px; color: #6b7280; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-align: center;
+  }
+  #gate .gate-foot span { color: #c9a84c; }
   body.locked { overflow: hidden; }
 </style>
 </head>
 <body class="locked">
 <div id="gate">
-  <form id="gate-form" class="gate-card" autocomplete="off">
-    <div class="gate-brand">TwentySix Consulting</div>
-    <h2>Penge Churches</h2>
-    <p class="gate-sub">Benefits Benchmark Report &mdash; Sign in to view.</p>
-    <label for="g-user">Username</label>
-    <input id="g-user" type="text" autocomplete="username" required>
-    <label for="g-pass">Password</label>
-    <input id="g-pass" type="password" autocomplete="current-password" required>
-    <button id="g-submit" type="submit">Sign in</button>
-    <div class="gate-err" id="g-err"></div>
-  </form>
+  <div class="gate-frame">
+    <div class="gate-eyebrow">TwentySix Consulting</div>
+    <form id="gate-form" class="gate-card" autocomplete="off">
+      <h1 class="gate-title">Penge Churches <em>&mdash; Benefits Benchmark</em></h1>
+      <p class="gate-sub">Confidential benchmark report. Sign in to view.</p>
+      <div class="gate-divider"></div>
+      <label for="g-user">Username</label>
+      <input id="g-user" type="text" autocomplete="username" placeholder="Your username" required>
+      <label for="g-pass">Password</label>
+      <input id="g-pass" type="password" autocomplete="current-password" placeholder="••••••••" required>
+      <button id="g-submit" type="submit">
+        <span>Sign in</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+      </button>
+      <div class="gate-err" id="g-err"></div>
+    </form>
+    <div class="gate-foot">May 2026 <span>·</span> Confidential</div>
+  </div>
 </div>
 <div id="content" hidden></div>
 <script>
